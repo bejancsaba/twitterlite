@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import csaba.bejan.twitterlite.controller.command.DefaultTwitterLiteActionCommand;
+import csaba.bejan.twitterlite.controller.command.DefaultTwitterLiteInputProcessor;
+import csaba.bejan.twitterlite.controller.command.DefaultTwitterLiteTaskProcessor;
 import csaba.bejan.twitterlite.dao.InMemoryTwitterLiteDataStoreDao;
+import csaba.bejan.twitterlite.domain.Task;
 import csaba.bejan.twitterlite.service.DefaultUserProvider;
 
 /**
@@ -18,7 +20,8 @@ import csaba.bejan.twitterlite.service.DefaultUserProvider;
 public final class TwitterLite {
     private static final InMemoryTwitterLiteDataStoreDao DATA_STORE_DAO = new InMemoryTwitterLiteDataStoreDao();
     private static final DefaultUserProvider USER_PROVIDER = new DefaultUserProvider();
-    private static final DefaultTwitterLiteActionCommand COMMAND = new DefaultTwitterLiteActionCommand();
+    private static final DefaultTwitterLiteTaskProcessor TASK_PROCESSOR = new DefaultTwitterLiteTaskProcessor();
+    private static final DefaultTwitterLiteInputProcessor INPUT_PROCESSOR = new DefaultTwitterLiteInputProcessor();
 
     private TwitterLite() {
         //not called
@@ -27,16 +30,17 @@ public final class TwitterLite {
     public static void main(String[] args) {
         // initialize
         USER_PROVIDER.setTwitterLiteDataStoreDao(DATA_STORE_DAO);
-        COMMAND.setTwitterLiteDataStoreDao(DATA_STORE_DAO);
-        COMMAND.setUserProvider(USER_PROVIDER);
+        INPUT_PROCESSOR.setUserProvider(USER_PROVIDER);
+        TASK_PROCESSOR.setTwitterLiteDataStoreDao(DATA_STORE_DAO);
 
         while (true) {
             BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
             try {
                 System.out.print("> ");
-                String input = inputReader.readLine();
-                List<String> result = COMMAND.execute(input);
-                if (result != null) {
+                Task task = INPUT_PROCESSOR.process(inputReader.readLine());
+                List<String> result = TASK_PROCESSOR.process(task);
+                if (result != null && !result.isEmpty()) {
+                    System.out.println();
                     for (String formattedMessage : result) {
                         System.out.println(formattedMessage);
                     }

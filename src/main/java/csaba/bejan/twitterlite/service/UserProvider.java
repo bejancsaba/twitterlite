@@ -11,9 +11,17 @@ import csaba.bejan.twitterlite.domain.User;
 public interface UserProvider {
 
     /**
-     * Returns a user for the given name, if it doesn't exist it creates it.
+     * Returns a user for the given name, if it doesn't exist it creates it if requested.
      *
-     * @param name the name of the user to be created
+     * @param name the name of the user to be returned
+     * @return the created user
+     */
+    User getUser(String name, boolean createIfNotExist);
+
+    /**
+     * Returns a user for the given name.
+     *
+     * @param name the name of the user to be returned
      * @return the created user
      */
     User getUser(String name);

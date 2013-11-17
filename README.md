@@ -1,6 +1,19 @@
 twitterlite
 ===========
 
+How to start
+------------
+
+After retrieving the code from GitHub using maven the only thing to do is to execute the following command in the TwitterLite folder:
+
+`mvn clean install exec:java`
+
+It will do the following:
+- Builds the code
+- Executes checkstyle
+- Executes the tests implemented
+- If there were no errors it finally starts the application
+
 Task
 ----
 

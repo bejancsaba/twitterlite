@@ -1,6 +1,7 @@
 package csaba.bejan.twitterlite.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -44,11 +45,20 @@ public class DefaultUserProviderTest {
     }
 
     @Test
-    public void shouldCreateNonExistingUser() {
+    public void shouldCreateNonExistingUserIfRequested() {
         User mockUser = mock(User.class);
         when(twitterLiteDataStoreDao.getUserForName("test")).thenReturn(null);
         when(twitterLiteDataStoreDao.createUserWithName("test")).thenReturn(mockUser);
-        User returnedUser = defaultUserProvider.getUser("test");
+        User returnedUser = defaultUserProvider.getUser("test", true);
         assertEquals(mockUser, returnedUser);
+    }
+
+    @Test
+    public void shouldNotCreateNonExistingUserIfNotRequested() {
+        User mockUser = mock(User.class);
+        when(twitterLiteDataStoreDao.getUserForName("test")).thenReturn(null);
+        User returnedUser = defaultUserProvider.getUser("test");
+        assertNull(returnedUser);
+        verify(twitterLiteDataStoreDao, never()).createUserWithName(anyString());
     }
 }

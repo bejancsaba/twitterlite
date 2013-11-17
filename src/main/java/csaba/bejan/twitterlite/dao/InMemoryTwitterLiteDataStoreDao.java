@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import csaba.bejan.twitterlite.domain.Message;
 import csaba.bejan.twitterlite.domain.User;
 
 /**
@@ -14,17 +15,17 @@ import csaba.bejan.twitterlite.domain.User;
  *
  */
 public class InMemoryTwitterLiteDataStoreDao implements TwitterLiteDataStoreDao {
-    private Map<User, List<String>> dataStore = new HashMap<User, List<String>>();
+    private Map<User, List<Message>> dataStore = new HashMap<User, List<Message>>();
 
     @Override
-    public void addMessageForUser(User user, String message) {
+    public void addMessageForUser(User user, Message message) {
         if (dataStore.get(user) != null) {
             dataStore.get(user).add(message);
         }
     }
 
     @Override
-    public List<String> getMessageListForUser(User user) {
+    public List<Message> getMessageListForUser(User user) {
         return dataStore.get(user);
     }
 
@@ -43,7 +44,7 @@ public class InMemoryTwitterLiteDataStoreDao implements TwitterLiteDataStoreDao 
     @Override
     public User createUserWithName(String userName) {
         User user = new User.UserBuilder().withName(userName).build();
-        dataStore.put(user, new ArrayList<String>());
+        dataStore.put(user, new ArrayList<Message>());
         return user;
     }
 }

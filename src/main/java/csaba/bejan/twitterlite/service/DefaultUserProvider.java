@@ -14,8 +14,13 @@ public class DefaultUserProvider implements UserProvider {
 
     @Override
     public User getUser(String name) {
+        return getUser(name, false);
+    }
+
+    @Override
+    public User getUser(String name, boolean createIfNotExist) {
         User user = twitterLiteDataStoreDao.getUserForName(name);
-        if (user == null) {
+        if (user == null && createIfNotExist) {
             user = twitterLiteDataStoreDao.createUserWithName(name);
         }
         return user;

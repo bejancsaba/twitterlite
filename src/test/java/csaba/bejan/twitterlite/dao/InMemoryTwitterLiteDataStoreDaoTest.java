@@ -2,12 +2,14 @@ package csaba.bejan.twitterlite.dao;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import csaba.bejan.twitterlite.domain.Message;
 import csaba.bejan.twitterlite.domain.User;
 
 /**
@@ -45,27 +47,31 @@ public class InMemoryTwitterLiteDataStoreDaoTest {
     @Test
     public void shouldReturnEmptyMessageListForNewUser() {
         User user = inMemoryTwitterLiteDataStoreDao.createUserWithName("testUser");
-        assertEquals(0, inMemoryTwitterLiteDataStoreDao.getMessageListForUser(user).size());
+        assertTrue(inMemoryTwitterLiteDataStoreDao.getMessageListForUser(user).isEmpty());
     }
 
     @Test
     public void shouldReturnMessageListForUser() {
         User user = inMemoryTwitterLiteDataStoreDao.createUserWithName("testUser");
-        inMemoryTwitterLiteDataStoreDao.addMessageForUser(user, "text 1");
-        inMemoryTwitterLiteDataStoreDao.addMessageForUser(user, "text 2");
+        inMemoryTwitterLiteDataStoreDao.addMessageForUser(user, aMessageWithText("text 1"));
+        inMemoryTwitterLiteDataStoreDao.addMessageForUser(user, aMessageWithText("text 2"));
         assertEquals(2, inMemoryTwitterLiteDataStoreDao.getMessageListForUser(user).size());
-        assertEquals("text 1", inMemoryTwitterLiteDataStoreDao.getMessageListForUser(user).get(0));
-        assertEquals("text 2", inMemoryTwitterLiteDataStoreDao.getMessageListForUser(user).get(1));
+        assertEquals("text 1", inMemoryTwitterLiteDataStoreDao.getMessageListForUser(user).get(0).getMessageText());
+        assertEquals("text 2", inMemoryTwitterLiteDataStoreDao.getMessageListForUser(user).get(1).getMessageText());
     }
 
     @Test
     public void shouldntAddMessageForNonExistingUser() {
         User user = aUserWithName("nonexistent");
-        inMemoryTwitterLiteDataStoreDao.addMessageForUser(user, "message");
+        inMemoryTwitterLiteDataStoreDao.addMessageForUser(user, aMessageWithText("message"));
         assertNull(inMemoryTwitterLiteDataStoreDao.getMessageListForUser(user));
     }
 
     private User aUserWithName(String name) {
         return new User.UserBuilder().withName(name).build();
+    }
+
+    private Message aMessageWithText(String text) {
+        return new Message.MessageBuilder().withText(text).build();
     }
 }

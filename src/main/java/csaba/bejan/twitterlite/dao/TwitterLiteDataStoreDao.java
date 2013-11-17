@@ -2,6 +2,7 @@ package csaba.bejan.twitterlite.dao;
 
 import java.util.List;
 
+import csaba.bejan.twitterlite.domain.Message;
 import csaba.bejan.twitterlite.domain.User;
 
 /**
@@ -20,7 +21,7 @@ public interface TwitterLiteDataStoreDao {
      * @param message the message to be added
      * @return list of messages posted by the user
      */
-    void addMessageForUser(User user, String message);
+    void addMessageForUser(User user, Message message);
 
     /**
      * Returns the available messages for a given user.
@@ -29,7 +30,7 @@ public interface TwitterLiteDataStoreDao {
      * @param user the user we want the messages for
      * @return list of messages posted by the user
      */
-    List<String> getMessageListForUser(User user);
+    List<Message> getMessageListForUser(User user);
 
     /**
      * Returns the user for the name if exists.

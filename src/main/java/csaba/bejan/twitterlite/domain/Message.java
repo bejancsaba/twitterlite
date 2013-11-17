@@ -6,7 +6,7 @@ package csaba.bejan.twitterlite.domain;
  * @author Csaba Bejan
  *
  */
-public class Message {
+public class Message implements TwitterLiteEntity {
     private String messageText;
 
     /**
