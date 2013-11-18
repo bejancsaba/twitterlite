@@ -14,6 +14,16 @@ It will do the following:
 - Executes the tests implemented
 - If there were no errors it finally starts the application
 
+Identified improvement possibilities
+------------------------------------
+
+- Create integration test to cover all the example scenarios
+- Use spring to handle dependency injection nicely
+- Add logging
+- Introduce client / server model (also take care of caching and concurrency)
+- Persist data in a key - value datastore
+- Localization for the time stamps
+
 Task
 ----
 

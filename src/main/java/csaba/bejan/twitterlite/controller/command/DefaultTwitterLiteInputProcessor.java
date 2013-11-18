@@ -18,6 +18,8 @@ import csaba.bejan.twitterlite.service.UserProvider;
 public class DefaultTwitterLiteInputProcessor implements TwitterLiteInputProcessor {
     private static final Pattern POST_PATTERN = Pattern.compile("([a-zA-Z\\d]+) -> (.+)");
     private static final Pattern READ_PATTERN = Pattern.compile("([a-zA-Z\\d]+)");
+    private static final Pattern FOLLOW_PATTERN = Pattern.compile("([a-zA-Z\\d]+) follows ([a-zA-Z\\d]+)");
+    private static final Pattern WALL_PATTERN = Pattern.compile("([a-zA-Z\\d]+) wall");
     private static final boolean SHOULD_CREATE_USER_IF_NOT_EXISTS = true;
 
     private UserProvider userProvider;
@@ -40,6 +42,26 @@ public class DefaultTwitterLiteInputProcessor implements TwitterLiteInputProcess
             if (matcher.matches()) {
                 User originUser = userProvider.getUser(matcher.group(1));
                 task = new Task.TaskBuilder().withOrigin(originUser).withAction(Action.READ).build();
+            }
+        }
+
+        if (task == null) {
+            matcher = FOLLOW_PATTERN.matcher(input);
+            if (matcher.matches()) {
+                User user = userProvider.getUser(matcher.group(1));
+                if (user != null && userProvider.getUser(matcher.group(2)) != null) {
+                    task = new Task.TaskBuilder().withOrigin(user).withAction(Action.FOLLOW).withTarget(userProvider.getUser(matcher.group(2))).build();
+                }
+            }
+        }
+
+        if (task == null) {
+            matcher = WALL_PATTERN.matcher(input);
+            if (matcher.matches()) {
+                User user = userProvider.getUser(matcher.group(1));
+                if (user != null) {
+                    task = new Task.TaskBuilder().withOrigin(user).withAction(Action.WALL).build();
+                }
             }
         }
 

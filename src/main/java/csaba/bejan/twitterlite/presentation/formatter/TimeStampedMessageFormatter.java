@@ -13,11 +13,12 @@ import csaba.bejan.twitterlite.domain.Message;
  */
 public class TimeStampedMessageFormatter implements MessageFormatter {
     private static final String FORMAT = "%s (%d %s%s ago)";
+    private static final String NAME_PREFIXED_FORMAT = "%s - %s";
 
     @Override
     public String format(Message message) {
         int timeUnitCount = 0;
-        String timeUnitName = "";
+        String timeUnitName = "second";
         String plural = "";
         long elapsedTime = getCurrentTimeInMilis() - message.getTimeStamp();
         if (TimeUnit.MILLISECONDS.toDays(elapsedTime) > 0) {
@@ -38,6 +39,11 @@ public class TimeStampedMessageFormatter implements MessageFormatter {
             plural = "s";
         }
         return String.format(FORMAT, message.getMessageText(), timeUnitCount, timeUnitName, plural);
+    }
+
+    @Override
+    public String formatWithName(Message message) {
+        return String.format(NAME_PREFIXED_FORMAT, message.getSenderName(), format(message));
     }
 
     protected long getCurrentTimeInMilis() {

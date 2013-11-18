@@ -1,5 +1,8 @@
 package csaba.bejan.twitterlite.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Information about the user.
  *
@@ -8,6 +11,7 @@ package csaba.bejan.twitterlite.domain;
  */
 public class User implements TwitterLiteEntity {
     private String userName;
+    private List<User> follows = new ArrayList<User>();;
 
     /**
      * Creates an empty user.
@@ -22,6 +26,7 @@ public class User implements TwitterLiteEntity {
      */
     public User(UserBuilder builder) {
         this.userName = builder.userName;
+        this.follows = builder.follows;
     }
 
     public String getUserName() {
@@ -32,6 +37,14 @@ public class User implements TwitterLiteEntity {
         this.userName = userName;
     }
 
+    public List<User> getFollows() {
+        return follows;
+    }
+
+    public void addFollows(User user) {
+        this.follows.add(user);
+    }
+
     /**
      * Builder for {@link User}.
      *
@@ -40,6 +53,7 @@ public class User implements TwitterLiteEntity {
      */
     public static final class UserBuilder {
         private String userName;
+        private List<User> follows = new ArrayList<User>();
 
         /**
          * Sets the userName.
@@ -49,6 +63,17 @@ public class User implements TwitterLiteEntity {
          */
         public UserBuilder withName(String userName) {
             this.userName = userName;
+            return this;
+        }
+
+        /**
+         * Adds a person to follow.
+         *
+         * @param user the user which is followed
+         * @return this builder instance
+         */
+        public UserBuilder withFollows(User user) {
+            this.follows.add(user);
             return this;
         }
 

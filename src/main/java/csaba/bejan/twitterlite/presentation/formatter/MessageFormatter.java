@@ -17,4 +17,12 @@ public interface MessageFormatter {
      * @return the formatted string message
      */
     String format(Message message);
+
+    /**
+     * Formats the message with the name prefix.
+     *
+     * @param message the message to be formatted
+     * @return the formatted string message
+     */
+    String formatWithName(Message message);
 }

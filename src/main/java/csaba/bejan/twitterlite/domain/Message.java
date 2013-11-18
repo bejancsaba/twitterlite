@@ -25,6 +25,7 @@ public class Message implements TwitterLiteEntity {
     public Message(MessageBuilder builder) {
         this.messageText = builder.messageText;
         this.timeStamp = builder.timeStamp;
+        this.senderName = builder.senderName;
     }
 
     public String getMessageText() {

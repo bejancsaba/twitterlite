@@ -66,6 +66,14 @@ public class TimeStampedMessageFormatterTest {
         assertEquals("Text (1 day ago)", result);
     }
 
+    @Test
+    public void withSender() {
+        Message message = new Message.MessageBuilder().withText("Text").withTimeStamp(0L).withSenderName("senderName").build();
+        when(timeStampedMessageFormatter.getCurrentTimeInMilis()).thenReturn(ONE_SEC);
+        String result = timeStampedMessageFormatter.formatWithName(message);
+        assertEquals("senderName - Text (1 second ago)", result);
+    }
+
     private Message aMessageWith(String text, long timestamp) {
         return new Message.MessageBuilder().withText(text).withTimeStamp(timestamp).build();
     }

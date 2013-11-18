@@ -8,5 +8,7 @@ package csaba.bejan.twitterlite.domain;
  */
 public enum Action {
     POST,
-    READ
+    READ,
+    FOLLOW,
+    WALL
 }

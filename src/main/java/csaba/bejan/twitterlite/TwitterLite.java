@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import csaba.bejan.twitterlite.command.comparator.MessagePostTimeComparator;
 import csaba.bejan.twitterlite.controller.command.DefaultTwitterLiteInputProcessor;
 import csaba.bejan.twitterlite.controller.command.DefaultTwitterLiteTaskProcessor;
 import csaba.bejan.twitterlite.dao.InMemoryTwitterLiteDataStoreDao;
@@ -24,6 +25,7 @@ public final class TwitterLite {
     private static final DefaultUserProvider USER_PROVIDER = new DefaultUserProvider();
     private static final DefaultTwitterLiteTaskProcessor TASK_PROCESSOR = new DefaultTwitterLiteTaskProcessor();
     private static final DefaultTwitterLiteInputProcessor INPUT_PROCESSOR = new DefaultTwitterLiteInputProcessor();
+    private static final MessagePostTimeComparator COMPARATOR = new MessagePostTimeComparator();
 
     private TwitterLite() {
         //not called
@@ -35,6 +37,7 @@ public final class TwitterLite {
         INPUT_PROCESSOR.setUserProvider(USER_PROVIDER);
         TASK_PROCESSOR.setTwitterLiteDataStoreDao(DATA_STORE_DAO);
         TASK_PROCESSOR.setMessageFormatter(TIME_STAMPED_MESSAGE_FORMATTER);
+        TASK_PROCESSOR.setMessageComparator(COMPARATOR);
 
         while (true) {
             BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));

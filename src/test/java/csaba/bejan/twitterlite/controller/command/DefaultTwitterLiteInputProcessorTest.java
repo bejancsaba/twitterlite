@@ -60,6 +60,49 @@ public class DefaultTwitterLiteInputProcessorTest {
     }
 
     @Test
+    public void shouldCreateFollowTask() {
+        User mockUser = mock(User.class);
+        User mockFollowsUser = mock(User.class);
+        when(userProvider.getUser("Charlie")).thenReturn(mockUser);
+        when(userProvider.getUser("Alice")).thenReturn(mockFollowsUser);
+        Task task = defaultTwitterLiteInputProcessor.process("Charlie follows Alice");
+        verify(userProvider, times(1)).getUser("Charlie");
+        verify(userProvider, times(2)).getUser("Alice");
+        assertEquals(Action.FOLLOW, task.getAction());
+        assertEquals(mockUser, task.getOrigin());
+        assertEquals(mockFollowsUser, (User) task.getTarget());
+    }
+
+    @Test
+    public void shouldNotCreateFollowTask() {
+        User mockUser = mock(User.class);
+        when(userProvider.getUser("Charlie")).thenReturn(mockUser);
+        when(userProvider.getUser("Alice")).thenReturn(null);
+        Task task = defaultTwitterLiteInputProcessor.process("Charlie follows Alice");
+        verify(userProvider, times(1)).getUser("Charlie");
+        verify(userProvider, times(1)).getUser("Alice");
+        assertNull(task);
+    }
+
+    @Test
+    public void shouldCreateWallTask() {
+        User mockUser = mock(User.class);
+        when(userProvider.getUser("Charlie")).thenReturn(mockUser);
+        Task task = defaultTwitterLiteInputProcessor.process("Charlie wall");
+        verify(userProvider, times(1)).getUser("Charlie");
+        assertEquals(Action.WALL, task.getAction());
+        assertEquals(mockUser, task.getOrigin());
+    }
+
+    @Test
+    public void shouldNotCreateWallTask() {
+        when(userProvider.getUser("Charlie")).thenReturn(null);
+        Task task = defaultTwitterLiteInputProcessor.process("Charlie wall");
+        verify(userProvider, times(1)).getUser("Charlie");
+        assertNull(task);
+    }
+
+    @Test
     public void shouldNotCreateTask() {
         Task task = defaultTwitterLiteInputProcessor.process("This is not a valid task");
         assertNull(task);
