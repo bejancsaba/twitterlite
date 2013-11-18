@@ -29,23 +29,17 @@ import csaba.bejan.twitterlite.service.UserProvider;
 public final class TwitterLite {
     private static final TwitterLiteDataStoreDao DATA_STORE_DAO = new InMemoryTwitterLiteDataStoreDao();
     private static final MessageFormatter TIME_STAMPED_MESSAGE_FORMATTER = new TimeStampedMessageFormatter();
-    private static final UserProvider USER_PROVIDER = new DefaultUserProvider();
-    private static final TwitterLiteTaskProcessor TASK_PROCESSOR = new DefaultTwitterLiteTaskProcessor();
-    private static final TwitterLiteInputProcessor INPUT_PROCESSOR = new DefaultTwitterLiteInputProcessor();
     private static final Comparator<Message> COMPARATOR = new MessagePostTimeComparator();
+    private static final UserProvider USER_PROVIDER = DefaultUserProvider.create(DATA_STORE_DAO);
+    private static final TwitterLiteTaskProcessor TASK_PROCESSOR = DefaultTwitterLiteTaskProcessor
+            .create(DATA_STORE_DAO, TIME_STAMPED_MESSAGE_FORMATTER, COMPARATOR);
+    private static final TwitterLiteInputProcessor INPUT_PROCESSOR = DefaultTwitterLiteInputProcessor.create(USER_PROVIDER);
 
     private TwitterLite() {
         //not called
     }
 
     public static void main(String[] args) {
-        // initialize
-        USER_PROVIDER.setTwitterLiteDataStoreDao(DATA_STORE_DAO);
-        INPUT_PROCESSOR.setUserProvider(USER_PROVIDER);
-        TASK_PROCESSOR.setTwitterLiteDataStoreDao(DATA_STORE_DAO);
-        TASK_PROCESSOR.setMessageFormatter(TIME_STAMPED_MESSAGE_FORMATTER);
-        TASK_PROCESSOR.setMessageComparator(COMPARATOR);
-
         while (true) {
             BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
             try {

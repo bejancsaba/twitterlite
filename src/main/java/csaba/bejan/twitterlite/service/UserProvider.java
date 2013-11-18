@@ -1,6 +1,5 @@
 package csaba.bejan.twitterlite.service;
 
-import csaba.bejan.twitterlite.dao.TwitterLiteDataStoreDao;
 import csaba.bejan.twitterlite.domain.User;
 
 /**
@@ -26,11 +25,4 @@ public interface UserProvider {
      * @return the created user
      */
     User getUser(String name);
-
-    /**
-     * Set the data store.
-     *
-     * @param dataStoreDao the dataStoreDao
-     */
-    void setTwitterLiteDataStoreDao(TwitterLiteDataStoreDao dataStoreDao);
 }

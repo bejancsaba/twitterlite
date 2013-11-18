@@ -58,17 +58,33 @@ public class DefaultTwitterLiteTaskProcessor implements TwitterLiteTaskProcessor
         return response;
     }
 
-    @Override
+    /**
+     * Factory method for creating DefaultTwitterLiteTaskProcessor.
+     *
+     * @param dataStoreDao the dataStoreDao
+     * @param messageFormatter the messageFormatter
+     * @param messageComparator the messageComparator
+     * @return the created DefaultTwitterLiteTaskProcessor
+     */
+    public static DefaultTwitterLiteTaskProcessor create(
+            TwitterLiteDataStoreDao dataStoreDao,
+            MessageFormatter messageFormatter,
+            Comparator<Message> messageComparator) {
+        DefaultTwitterLiteTaskProcessor taskProcessor = new DefaultTwitterLiteTaskProcessor();
+        taskProcessor.setTwitterLiteDataStoreDao(dataStoreDao);
+        taskProcessor.setMessageFormatter(messageFormatter);
+        taskProcessor.setMessageComparator(messageComparator);
+        return taskProcessor;
+    }
+
     public void setTwitterLiteDataStoreDao(TwitterLiteDataStoreDao twitterLiteDataStoreDao) {
         this.twitterLiteDataStoreDao = twitterLiteDataStoreDao;
     }
 
-    @Override
     public void setMessageFormatter(MessageFormatter messageFormatter) {
         this.messageFormatter = messageFormatter;
     }
 
-    @Override
     public void setMessageComparator(Comparator<Message> messageComparator) {
         this.messageComparator = messageComparator;
     }

@@ -68,7 +68,18 @@ public class DefaultTwitterLiteInputProcessor implements TwitterLiteInputProcess
         return task;
     }
 
-    @Override
+    /**
+     * Factory method for creating DefaultTwitterLiteInputProcessor.
+     *
+     * @param userProvider the userProvider
+     * @return the created DefaultTwitterLiteInputProcessor
+     */
+    public static DefaultTwitterLiteInputProcessor create(UserProvider userProvider) {
+        DefaultTwitterLiteInputProcessor inputProcessor = new DefaultTwitterLiteInputProcessor();
+        inputProcessor.setUserProvider(userProvider);
+        return inputProcessor;
+    }
+
     public void setUserProvider(UserProvider userProvider) {
         this.userProvider = userProvider;
     }

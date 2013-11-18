@@ -26,7 +26,18 @@ public class DefaultUserProvider implements UserProvider {
         return user;
     }
 
-    @Override
+    /**
+     * Factory method for creating DefaultUserProvider.
+     *
+     * @param dataStoreDao the dataStoreDao
+     * @return the created DefaultUserProvider
+     */
+    public static DefaultUserProvider create(TwitterLiteDataStoreDao dataStoreDao) {
+        DefaultUserProvider userProvider = new DefaultUserProvider();
+        userProvider.setTwitterLiteDataStoreDao(dataStoreDao);
+        return userProvider;
+    }
+
     public void setTwitterLiteDataStoreDao(TwitterLiteDataStoreDao twitterLiteDataStoreDao) {
         this.twitterLiteDataStoreDao = twitterLiteDataStoreDao;
     }
