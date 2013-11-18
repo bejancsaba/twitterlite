@@ -19,13 +19,13 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import csaba.bejan.twitterlite.controller.formatter.MessageFormatter;
 import csaba.bejan.twitterlite.dao.TwitterLiteDataStoreDao;
 import csaba.bejan.twitterlite.domain.Action;
 import csaba.bejan.twitterlite.domain.Message;
 import csaba.bejan.twitterlite.domain.Task;
 import csaba.bejan.twitterlite.domain.Task.TaskBuilder;
 import csaba.bejan.twitterlite.domain.User;
-import csaba.bejan.twitterlite.presentation.formatter.MessageFormatter;
 
 /**
  * Unit test for {@link DefaultTwitterLiteTaskProcessor}.

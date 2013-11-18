@@ -1,13 +1,10 @@
-package csaba.bejan.twitterlite.controller.command.comparator;
+package csaba.bejan.twitterlite.domain;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import csaba.bejan.twitterlite.command.comparator.MessagePostTimeComparator;
-import csaba.bejan.twitterlite.domain.Message;
 
 /**
  * Unit test for {@link MessagePostTimeComparator}.

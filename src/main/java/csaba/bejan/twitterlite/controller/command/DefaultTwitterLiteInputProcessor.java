@@ -68,6 +68,7 @@ public class DefaultTwitterLiteInputProcessor implements TwitterLiteInputProcess
         return task;
     }
 
+    @Override
     public void setUserProvider(UserProvider userProvider) {
         this.userProvider = userProvider;
     }

@@ -12,12 +12,6 @@ public class Message implements TwitterLiteEntity {
     private long timeStamp;
 
     /**
-     * Creates an empty message.
-     */
-    public Message() {
-    }
-
-    /**
      * Creates a message from a builder.
      *
      * @param builder the builder to use
@@ -32,24 +26,12 @@ public class Message implements TwitterLiteEntity {
         return messageText;
     }
 
-    public void setMessageText(String messageText) {
-        this.messageText = messageText;
-    }
-
     public long getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(long timeStamp) {
-        this.timeStamp = timeStamp;
-    }
-
     public String getSenderName() {
         return senderName;
-    }
-
-    public void setSenderName(String senderName) {
-        this.senderName = senderName;
     }
 
     /**

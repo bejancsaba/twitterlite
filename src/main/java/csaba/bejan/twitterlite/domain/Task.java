@@ -12,44 +12,26 @@ public class Task {
     private Action action;
 
     /**
-     * Creates an empty action.
-     */
-    public Task() {
-    }
-
-    /**
      * Creates a task from a builder.
      *
      * @param builder the builder to use
      */
     public Task(TaskBuilder builder) {
-        this.setOrigin(builder.origin);
-        this.setTarget(builder.target);
-        this.setAction(builder.action);
+        this.origin = builder.origin;
+        this.target = builder.target;
+        this.action = builder.action;
     }
 
     public User getOrigin() {
         return origin;
     }
 
-    public void setOrigin(User origin) {
-        this.origin = origin;
-    }
-
     public TwitterLiteEntity getTarget() {
         return target;
     }
 
-    public void setTarget(TwitterLiteEntity target) {
-        this.target = target;
-    }
-
     public Action getAction() {
         return action;
-    }
-
-    public void setAction(Action action) {
-        this.action = action;
     }
 
     /**

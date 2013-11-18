@@ -70,7 +70,7 @@ public class DefaultTwitterLiteInputProcessorTest {
         verify(userProvider, times(2)).getUser("Alice");
         assertEquals(Action.FOLLOW, task.getAction());
         assertEquals(mockUser, task.getOrigin());
-        assertEquals(mockFollowsUser, (User) task.getTarget());
+        assertEquals(mockFollowsUser, task.getTarget());
     }
 
     @Test

@@ -55,7 +55,6 @@ public class DefaultUserProviderTest {
 
     @Test
     public void shouldNotCreateNonExistingUserIfNotRequested() {
-        User mockUser = mock(User.class);
         when(twitterLiteDataStoreDao.getUserForName("test")).thenReturn(null);
         User returnedUser = defaultUserProvider.getUser("test");
         assertNull(returnedUser);

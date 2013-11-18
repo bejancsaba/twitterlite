@@ -5,11 +5,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import csaba.bejan.twitterlite.controller.formatter.MessageFormatter;
 import csaba.bejan.twitterlite.dao.TwitterLiteDataStoreDao;
 import csaba.bejan.twitterlite.domain.Message;
 import csaba.bejan.twitterlite.domain.Task;
 import csaba.bejan.twitterlite.domain.User;
-import csaba.bejan.twitterlite.presentation.formatter.MessageFormatter;
 
 /**
  * Default command for the {@link TwitterLiteTaskProcessor} interface.
@@ -25,7 +25,7 @@ public class DefaultTwitterLiteTaskProcessor implements TwitterLiteTaskProcessor
     @Override
     public List<String> process(Task task) {
         List<String> response = new ArrayList<String>();
-        if (task != null && task.getAction() != null) {
+        if (task != null && task.getAction() != null && task.getOrigin() != null) {
             switch (task.getAction()) {
                 case POST :
                     twitterLiteDataStoreDao.addMessageForUser(task.getOrigin(), (Message) task.getTarget());
@@ -41,7 +41,8 @@ public class DefaultTwitterLiteTaskProcessor implements TwitterLiteTaskProcessor
                     task.getOrigin().addFollows((User) task.getTarget());
                     break;
                 case WALL :
-                    List<Message> wallResponse = twitterLiteDataStoreDao.getMessageListForUser(task.getOrigin());
+                    List<Message> wallResponse = new ArrayList<Message>();
+                    wallResponse.addAll(twitterLiteDataStoreDao.getMessageListForUser(task.getOrigin()));
                     for (User actUser : task.getOrigin().getFollows()) {
                         wallResponse.addAll(twitterLiteDataStoreDao.getMessageListForUser(actUser));
                     }
@@ -57,14 +58,17 @@ public class DefaultTwitterLiteTaskProcessor implements TwitterLiteTaskProcessor
         return response;
     }
 
+    @Override
     public void setTwitterLiteDataStoreDao(TwitterLiteDataStoreDao twitterLiteDataStoreDao) {
         this.twitterLiteDataStoreDao = twitterLiteDataStoreDao;
     }
 
+    @Override
     public void setMessageFormatter(MessageFormatter messageFormatter) {
         this.messageFormatter = messageFormatter;
     }
 
+    @Override
     public void setMessageComparator(Comparator<Message> messageComparator) {
         this.messageComparator = messageComparator;
     }

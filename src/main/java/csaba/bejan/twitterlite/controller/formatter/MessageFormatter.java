@@ -1,4 +1,4 @@
-package csaba.bejan.twitterlite.presentation.formatter;
+package csaba.bejan.twitterlite.controller.formatter;
 
 import csaba.bejan.twitterlite.domain.Message;
 

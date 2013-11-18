@@ -1,4 +1,4 @@
-package csaba.bejan.twitterlite.presentation.formatter;
+package csaba.bejan.twitterlite.controller.formatter;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;

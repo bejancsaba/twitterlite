@@ -26,6 +26,7 @@ public class DefaultUserProvider implements UserProvider {
         return user;
     }
 
+    @Override
     public void setTwitterLiteDataStoreDao(TwitterLiteDataStoreDao twitterLiteDataStoreDao) {
         this.twitterLiteDataStoreDao = twitterLiteDataStoreDao;
     }

@@ -1,8 +1,6 @@
-package csaba.bejan.twitterlite.command.comparator;
+package csaba.bejan.twitterlite.domain;
 
 import java.util.Comparator;
-
-import csaba.bejan.twitterlite.domain.Message;
 
 /**
  * Compares message time stamps.

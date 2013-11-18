@@ -11,13 +11,7 @@ import java.util.List;
  */
 public class User implements TwitterLiteEntity {
     private String userName;
-    private List<User> follows = new ArrayList<User>();;
-
-    /**
-     * Creates an empty user.
-     */
-    public User() {
-    }
+    private List<User> follows = new ArrayList<User>();
 
     /**
      * Creates a user from a builder.
@@ -31,10 +25,6 @@ public class User implements TwitterLiteEntity {
 
     public String getUserName() {
         return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public List<User> getFollows() {
