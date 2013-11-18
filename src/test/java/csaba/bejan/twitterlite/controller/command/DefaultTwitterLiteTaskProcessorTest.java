@@ -2,6 +2,7 @@ package csaba.bejan.twitterlite.controller.command;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -22,6 +23,7 @@ import csaba.bejan.twitterlite.domain.Message;
 import csaba.bejan.twitterlite.domain.Task;
 import csaba.bejan.twitterlite.domain.Task.TaskBuilder;
 import csaba.bejan.twitterlite.domain.User;
+import csaba.bejan.twitterlite.presentation.formatter.MessageFormatter;
 
 /**
  * Unit test for {@link DefaultTwitterLiteTaskProcessor}.
@@ -35,10 +37,13 @@ public class DefaultTwitterLiteTaskProcessorTest {
 
     @Mock
     private TwitterLiteDataStoreDao twitterLiteDataStoreDao;
+    @Mock
+    private MessageFormatter messageFormatter;
 
     @Before
     public void initCommand() {
         defaultTwitterLiteTaskProcessor.setTwitterLiteDataStoreDao(twitterLiteDataStoreDao);
+        defaultTwitterLiteTaskProcessor.setMessageFormatter(messageFormatter);
     }
 
     @Test
@@ -63,6 +68,7 @@ public class DefaultTwitterLiteTaskProcessorTest {
         List<Message> responseMessageList = new ArrayList<Message>();
         responseMessageList.add(new Message.MessageBuilder().withText("text 1").build());
         responseMessageList.add(new Message.MessageBuilder().withText("text 2").build());
+        when(messageFormatter.format(any(Message.class))).thenReturn("");
         when(twitterLiteDataStoreDao.getMessageListForUser(mockUser)).thenReturn(responseMessageList);
         List<String> result = defaultTwitterLiteTaskProcessor.process(aTask().withAction(Action.READ).withOrigin(mockUser).build());
         assertEquals(2, result.size());

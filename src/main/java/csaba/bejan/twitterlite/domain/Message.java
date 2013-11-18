@@ -8,6 +8,8 @@ package csaba.bejan.twitterlite.domain;
  */
 public class Message implements TwitterLiteEntity {
     private String messageText;
+    private String senderName;
+    private long timeStamp;
 
     /**
      * Creates an empty message.
@@ -22,6 +24,7 @@ public class Message implements TwitterLiteEntity {
      */
     public Message(MessageBuilder builder) {
         this.messageText = builder.messageText;
+        this.timeStamp = builder.timeStamp;
     }
 
     public String getMessageText() {
@@ -32,6 +35,22 @@ public class Message implements TwitterLiteEntity {
         this.messageText = messageText;
     }
 
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
+
     /**
      * Builder for {@link Message}.
      *
@@ -40,15 +59,40 @@ public class Message implements TwitterLiteEntity {
      */
     public static final class MessageBuilder {
         private String messageText;
+        private String senderName;
+        private long timeStamp;
 
         /**
          * Sets the messageText.
          *
-         * @param id the id
+         * @param messageText the messageText
          * @return this builder instance
          */
         public MessageBuilder withText(String messageText) {
             this.messageText = messageText;
+            return this;
+        }
+
+        /**
+         * Sets the senderName.
+         *
+         * @param senderName the senderName
+         * @return this builder instance
+         */
+        public MessageBuilder withSenderName(String senderName) {
+            this.senderName = senderName;
+            return this;
+        }
+
+
+        /**
+         * Sets the timeStamp of the message.
+         *
+         * @param id the id
+         * @return this builder instance
+         */
+        public MessageBuilder withTimeStamp(long timeStamp) {
+            this.timeStamp = timeStamp;
             return this;
         }
 

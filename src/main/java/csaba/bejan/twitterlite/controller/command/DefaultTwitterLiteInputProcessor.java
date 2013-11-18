@@ -25,10 +25,13 @@ public class DefaultTwitterLiteInputProcessor implements TwitterLiteInputProcess
     @Override
     public Task process(String input) {
         Task task = null;
+        long timeStamp = System.currentTimeMillis();
         Matcher matcher = POST_PATTERN.matcher(input);
         if (matcher.matches()) {
             User originUser = userProvider.getUser(matcher.group(1), SHOULD_CREATE_USER_IF_NOT_EXISTS);
-            Message targetMessage = new Message.MessageBuilder().withText(matcher.group(2)).build();
+            Message targetMessage = new Message.MessageBuilder()
+                    .withText(matcher.group(2)).withTimeStamp(timeStamp)
+                    .withSenderName(originUser.getUserName()).build();
             task = new Task.TaskBuilder().withOrigin(originUser).withTarget(targetMessage).withAction(Action.POST).build();
         }
 

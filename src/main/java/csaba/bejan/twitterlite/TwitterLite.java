@@ -9,6 +9,7 @@ import csaba.bejan.twitterlite.controller.command.DefaultTwitterLiteInputProcess
 import csaba.bejan.twitterlite.controller.command.DefaultTwitterLiteTaskProcessor;
 import csaba.bejan.twitterlite.dao.InMemoryTwitterLiteDataStoreDao;
 import csaba.bejan.twitterlite.domain.Task;
+import csaba.bejan.twitterlite.presentation.formatter.TimeStampedMessageFormatter;
 import csaba.bejan.twitterlite.service.DefaultUserProvider;
 
 /**
@@ -19,6 +20,7 @@ import csaba.bejan.twitterlite.service.DefaultUserProvider;
  */
 public final class TwitterLite {
     private static final InMemoryTwitterLiteDataStoreDao DATA_STORE_DAO = new InMemoryTwitterLiteDataStoreDao();
+    private static final TimeStampedMessageFormatter TIME_STAMPED_MESSAGE_FORMATTER = new TimeStampedMessageFormatter();
     private static final DefaultUserProvider USER_PROVIDER = new DefaultUserProvider();
     private static final DefaultTwitterLiteTaskProcessor TASK_PROCESSOR = new DefaultTwitterLiteTaskProcessor();
     private static final DefaultTwitterLiteInputProcessor INPUT_PROCESSOR = new DefaultTwitterLiteInputProcessor();
@@ -32,6 +34,7 @@ public final class TwitterLite {
         USER_PROVIDER.setTwitterLiteDataStoreDao(DATA_STORE_DAO);
         INPUT_PROCESSOR.setUserProvider(USER_PROVIDER);
         TASK_PROCESSOR.setTwitterLiteDataStoreDao(DATA_STORE_DAO);
+        TASK_PROCESSOR.setMessageFormatter(TIME_STAMPED_MESSAGE_FORMATTER);
 
         while (true) {
             BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));

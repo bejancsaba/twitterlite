@@ -6,6 +6,7 @@ import java.util.List;
 import csaba.bejan.twitterlite.dao.TwitterLiteDataStoreDao;
 import csaba.bejan.twitterlite.domain.Message;
 import csaba.bejan.twitterlite.domain.Task;
+import csaba.bejan.twitterlite.presentation.formatter.MessageFormatter;
 
 /**
  * Default command for the {@link TwitterLiteTaskProcessor} interface.
@@ -15,6 +16,7 @@ import csaba.bejan.twitterlite.domain.Task;
  */
 public class DefaultTwitterLiteTaskProcessor implements TwitterLiteTaskProcessor {
     private TwitterLiteDataStoreDao twitterLiteDataStoreDao;
+    private MessageFormatter messageFormatter;
 
     @Override
     public List<String> process(Task task) {
@@ -27,7 +29,7 @@ public class DefaultTwitterLiteTaskProcessor implements TwitterLiteTaskProcessor
                 case READ :
                     List<Message> messageResponse = twitterLiteDataStoreDao.getMessageListForUser(task.getOrigin());
                     for (Message actMessage : messageResponse) {
-                        response.add(actMessage.getMessageText());
+                        response.add(messageFormatter.format(actMessage));
                     }
                     break;
                 default:
@@ -39,5 +41,9 @@ public class DefaultTwitterLiteTaskProcessor implements TwitterLiteTaskProcessor
 
     public void setTwitterLiteDataStoreDao(TwitterLiteDataStoreDao twitterLiteDataStoreDao) {
         this.twitterLiteDataStoreDao = twitterLiteDataStoreDao;
+    }
+
+    public void setMessageFormatter(MessageFormatter messageFormatter) {
+        this.messageFormatter = messageFormatter;
     }
 }
